@@ -207,6 +207,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
                 printWinner=("The Winner was: (" + winner.un +") "+ " " + winner.getName() + "!");
                 electionField.append(num + ". " + printWinner + "\n");
                 electionField.append("There was a total of " + numOfErrors + " incorrect vote methods across " + numOfElections + " runs" +"\n");
+
                 num++;
                 numOfElections = 0;
 
@@ -220,6 +221,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
 
                 String otherWinnersPresent = otherWinners > 0 ? "There were no other winners." : "There were " + otherWinners + " votes for other winners!";
                 System.out.println(otherWinnersPresent);
+                electionField.append(otherWinnersPresent + "\n\n");
             }
         }
     }
@@ -286,7 +288,6 @@ public class MP_ec22529 extends JFrame implements ActionListener {
             try {
                 votes[i] = getCandidateArray()[i].vote(array);
                 String printable = "("+getCandidateArray()[i].un+")" +":" + " chose " + getCandidateArray()[i].getName() + "\twith slogan: " + getCandidateArray()[i].getSlogan();
-                //System.out.println(printable);
                sloganField.append(printable +"\n");
 
             } catch(Exception e) {
