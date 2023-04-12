@@ -21,7 +21,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
     private JFrame frameElection;
     private JTextField textField;
     private boolean isWindowCreated = false;
-    private JButton addButton, randomButton, runButton, displayButton, exitButton, submitButton;
+    private JButton addButton, randomButton, runButton, displayButton, exitButton, submitButton, clearButton;
     private boolean validated = false;
     private ArrayList<Candidate> list;
 
@@ -34,6 +34,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
     private JScrollPane scrollPane;
     private int num = 1;
     private static int numOfErrors = 0;
+    private static int numOfElections;
 
     public MP_ec22529() {
         this.list = new ArrayList<Candidate>();
@@ -45,30 +46,35 @@ public class MP_ec22529 extends JFrame implements ActionListener {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         
-        JLabel optionA = new JLabel("Add a specific candidate:");
+        JLabel optionA = new JLabel("Add a candidate:");
         panel.add(optionA);
         textField = new JTextField(20);
         panel.add(textField);
 
         //SUBMIT BUTTON
-        submitButton = new JButton("Submit specific Candidate");
+        submitButton = new JButton("Submit specific candidate");
         submitButton.addActionListener(this);
         panel.add(submitButton);
 
         //RANDOM BUTTON
-        randomButton = new JButton("Add a candidate at random");
+        randomButton = new JButton("Add 1 random candidate");
         randomButton.addActionListener(this);
         panel.add(randomButton);
 
         //DISPLAY BUTTON
-        displayButton = new JButton("Add 50 Random");
+        displayButton = new JButton("Add 50 random");
         displayButton.addActionListener(this);
         panel.add(displayButton);
 
         //RUN ELECTION BUTTON
-        runButton = new JButton("Run The Election");
+        runButton = new JButton("Run Election");
         runButton.addActionListener(this);
         panel.add(runButton);
+
+        //clear Button
+        clearButton = new JButton("Clear all");
+        clearButton.addActionListener(this);
+        panel.add(clearButton);
 
         //EXIT BUTTON
         exitButton = new JButton("Exit");
@@ -168,23 +174,25 @@ public class MP_ec22529 extends JFrame implements ActionListener {
                 }
             }
         } else if (e.getSource() == displayButton) {
-            // Code to display the current candidates' list
-            if(list.isEmpty())
-            {
-                JOptionPane.showMessageDialog(null, "No Candidates selected", "No of Candidates", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else {
-                StringBuilder message = new StringBuilder();
-                int counter = 0;
-                for (Candidate candidate : list) {
-                    message.append(candidate.getName()).append(", ");
-                    counter++;
-                }
-                String noOfCandidates = "No of candidates selected: " + String.valueOf(counter);
-                JOptionPane.showMessageDialog(null, message.toString(), noOfCandidates, JOptionPane.INFORMATION_MESSAGE);
+
+            // Code to add a candidate at random
+            String userID ="";
+            Candidate randCandidate;
+            for(int i=0; i<50; i++) {
+                randCandidate = getRandomCandidate();
+                list.add(randCandidate);
+                userID = randCandidate.un;
+                displayField.append("(" + userID + ")" + " " + randCandidate.getName() + "\n");
             }
         } else if (e.getSource() == exitButton) {
             System.exit(0);
+        }
+        else if (e.getSource() == clearButton){
+            sloganField.setText("LIST OF CANDIDATE SLOGANS: \n\n");
+            displayField.setText("LIST OF CANDIDATES: \n\n");
+            electionField.setText("LIST OF ELECTION WINNERS: \n\n");
+            list.clear();
+            textField.setText("");
         }
         else if (e.getSource() == runButton) {
             if(textField.getText().equals("") && (list.isEmpty())){
@@ -198,7 +206,9 @@ public class MP_ec22529 extends JFrame implements ActionListener {
                 Candidate winner = findActualWinner(winners);
                 printWinner=("The Winner was: (" + winner.un +") "+ " " + winner.getName() + "!");
                 electionField.append(num + ". " + printWinner + "\n");
+                electionField.append("There was a total of " + numOfErrors + " incorrect vote methods across " + numOfElections + " runs" +"\n");
                 num++;
+                numOfElections = 0;
 
                 //other winners
                 int otherWinners = 0;
@@ -248,14 +258,16 @@ public class MP_ec22529 extends JFrame implements ActionListener {
             finally{
                 if(number == 0)
                 {
-                    JOptionPane.showMessageDialog(null,"The election ran for 0 times. No Winners of course.");
+                    JOptionPane.showMessageDialog(null,"Cannot run election 0 times.");
                     doNotDo = true;
+
                 }
             }
         }
+        numOfElections = number;
 // At this point, number contains a valid numeric value
         if(doNotDo){
-            throw new RuntimeException("Exiting program due to 0 frequency election");
+            throw new RuntimeException("0 frequency election exception");
         }
         Candidate[] winners = new Candidate[number];
 
@@ -273,20 +285,15 @@ public class MP_ec22529 extends JFrame implements ActionListener {
         for(int i = 0; i < getCandidateArray().length; i++) {
             try {
                 votes[i] = getCandidateArray()[i].vote(array);
-                String printable = getCandidateArray()[i].un + "\tchose " + getCandidateArray()[i].getName() + "\twith slogan: " + getCandidateArray()[i].getSlogan();
+                String printable = "("+getCandidateArray()[i].un+")" +":" + " chose " + getCandidateArray()[i].getName() + "\twith slogan: " + getCandidateArray()[i].getSlogan();
                 //System.out.println(printable);
                sloganField.append(printable +"\n");
 
             } catch(Exception e) {
-                System.out.println("error in " + getCandidateArray()[i] + "code");
                 numOfErrors++;
 
             }
-
-            //electionField.append("There were " + numOfErrors + " classes with incorrect vote methods");
-
         }
-
         // Find most present candidate in array
         return counter.selectWinner(votes);
     }
