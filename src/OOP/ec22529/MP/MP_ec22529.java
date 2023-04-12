@@ -11,6 +11,8 @@ import java.util.Random;
 import java.util.Scanner;
 import javax.swing.Timer;
 
+import static OOP.ec22529.MP.contributions.A3.getCandidateArray;
+
 public class MP_ec22529 extends JFrame implements ActionListener {
 
     private JPanel panelMain;
@@ -25,14 +27,20 @@ public class MP_ec22529 extends JFrame implements ActionListener {
 
     private JTextArea displayField;
 
-    private JTextArea electionField;
+    private static JTextArea electionField;
+
+    private static JTextArea sloganField;
+
+    private JScrollPane scrollPane;
     private int num = 1;
+    private static int numOfErrors = 0;
 
     public MP_ec22529() {
         this.list = new ArrayList<Candidate>();
         setTitle("Election");
         setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
 
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -52,15 +60,15 @@ public class MP_ec22529 extends JFrame implements ActionListener {
         randomButton.addActionListener(this);
         panel.add(randomButton);
 
+        //DISPLAY BUTTON
+        displayButton = new JButton("Add 50 Random");
+        displayButton.addActionListener(this);
+        panel.add(displayButton);
+
         //RUN ELECTION BUTTON
         runButton = new JButton("Run The Election");
         runButton.addActionListener(this);
         panel.add(runButton);
-
-        //DISPLAY BUTTON
-        displayButton = new JButton("Display Candidates");
-        displayButton.addActionListener(this);
-        panel.add(displayButton);
 
         //EXIT BUTTON
         exitButton = new JButton("Exit");
@@ -69,20 +77,43 @@ public class MP_ec22529 extends JFrame implements ActionListener {
 
         displayField = new JTextArea("LIST OF CANDIDATES: \n\n");
         displayField.setFont(new Font("Arial", Font.PLAIN, 15));
-        displayField.setPreferredSize(new Dimension(400, 700));
+        displayField.setPreferredSize(new Dimension(200, 10000));
         displayField.setEditable(false);
         displayField.setLineWrap(true); // enable line wrapping
         displayField.setWrapStyleWord(true); // wrap lines on word boundaries
         panel.add(displayField);
 
+        scrollPane = new JScrollPane(displayField);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setPreferredSize(new Dimension(200, 700));
+        panel.add(scrollPane);
+
+
         electionField = new JTextArea("LIST OF ELECTION WINNERS: \n\n");
         electionField.setFont(new Font("Arial", Font.PLAIN, 15));
-        electionField.setPreferredSize(new Dimension(400, 700));
+        electionField.setPreferredSize(new Dimension(370, 10000));
         electionField.setEditable(false);
         electionField.setLineWrap(true);
         electionField.setWrapStyleWord(true);
         panel.add(electionField);
 
+        scrollPane = new JScrollPane(electionField);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setPreferredSize(new Dimension(370, 700));
+        panel.add(scrollPane);
+
+        sloganField = new JTextArea("LIST OF CANDIDATE SLOGANS: \n\n");
+        sloganField.setFont(new Font("Arial", Font.PLAIN, 15));
+        sloganField.setPreferredSize(new Dimension(540, 100000));
+        sloganField.setEditable(false);
+        sloganField.setLineWrap(true);
+        sloganField.setWrapStyleWord(true);
+        panel.add(sloganField);
+
+        scrollPane = new JScrollPane(sloganField);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setPreferredSize(new Dimension(540, 700));
+        panel.add(scrollPane);
 
         add(panel);
         setVisible(true);
@@ -117,7 +148,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
                     System.out.println("nothing in search box");
                     JOptionPane.showMessageDialog(null,"unknown error occured gathering your candidate input");
                 }
-                if(!candidateNameInArray(name, A3.getCandidateArray())) {
+                if(!candidateNameInArray(name, getCandidateArray())) {
                     //doesnt exist in the scope of candidates
                     System.out.println("Not a valid candidate!");
                     System.out.println(list.toString());
@@ -126,7 +157,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
                 else{
                     //allow candidatei nto array
                     String userID ="";
-                    Candidate chosenCandidate = A3.getByUsername(name, A3.getCandidateArray());
+                    Candidate chosenCandidate = A3.getByUsername(name, getCandidateArray());
                     list.add(chosenCandidate);
                     System.out.println("election good to go");
                     System.out.println(list.toString());
@@ -190,7 +221,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
 
     private static Candidate getRandomCandidate() {
         Random r = new Random();
-        return A3.getCandidateArray()[r.nextInt(A3.getCandidateArray().length - 1)];
+        return getCandidateArray()[r.nextInt(getCandidateArray().length - 1)];
     }
 
 
@@ -198,10 +229,10 @@ public class MP_ec22529 extends JFrame implements ActionListener {
     private static Candidate[] tallyCandidates(Candidate[] array) {
 
         String name = JOptionPane.showInputDialog(null, "Candidate name who should count the votes?");
-        while(!candidateNameInArray(name, A3.getCandidateArray())) {
+        while(!candidateNameInArray(name, getCandidateArray())) {
             name = JOptionPane.showInputDialog(null, "Enter a valid Candidate name who should count the votes?");
         }
-        Candidate counter = A3.getByUsername(name, A3.getCandidateArray());
+        Candidate counter = A3.getByUsername(name, getCandidateArray());
         int number = 0;
         boolean isValid = false;
         boolean doNotDo = false;
@@ -235,15 +266,25 @@ public class MP_ec22529 extends JFrame implements ActionListener {
         return winners;
     }
     private static Candidate findWinner(Candidate[] array, Candidate counter) {
-        Candidate[] votes = new Candidate[A3.getCandidateArray().length];
+
+        Candidate[] votes = new Candidate[getCandidateArray().length];
 
         // Populate array with votes
-        for(int i = 0; i < A3.getCandidateArray().length; i++) {
+        for(int i = 0; i < getCandidateArray().length; i++) {
             try {
-                votes[i] = A3.getCandidateArray()[i].vote(array);
+                votes[i] = getCandidateArray()[i].vote(array);
+                String printable = getCandidateArray()[i].un + "\tchose " + getCandidateArray()[i].getName() + "\twith slogan: " + getCandidateArray()[i].getSlogan();
+                //System.out.println(printable);
+               sloganField.append(printable +"\n");
+
             } catch(Exception e) {
-                System.out.println("failed");
+                System.out.println("error in " + getCandidateArray()[i] + "code");
+                numOfErrors++;
+
             }
+
+            //electionField.append("There were " + numOfErrors + " classes with incorrect vote methods");
+
         }
 
         // Find most present candidate in array

@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc81f5a0-d375-4d22-b3cc-6b1fbbb5937b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/OOP/ec22529/MP/MP_ec22529.java" afterDir="false" />
+    <list default="true" id="fc81f5a0-d375-4d22-b3cc-6b1fbbb5937b" name="Changes" comment="new ui for mp">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OOP/ec22529/MP/MP_ec22529.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/OOP/ec22529/MP/MP_ec22529.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,10 +54,24 @@
       <workItem from="1681309969919" duration="2670000" />
       <workItem from="1681312916860" duration="749000" />
       <workItem from="1681319458855" duration="6611000" />
+      <workItem from="1681326394226" duration="210000" />
+      <workItem from="1681332060376" duration="5656000" />
     </task>
+    <task id="LOCAL-00001" summary="new ui for mp">
+      <created>1681326612635</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1681326612635</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="new ui for mp" />
+    <option name="LAST_COMMIT_MESSAGE" value="new ui for mp" />
   </component>
 </project>
