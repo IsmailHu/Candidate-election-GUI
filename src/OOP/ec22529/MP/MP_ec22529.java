@@ -9,7 +9,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import javax.swing.Timer;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.*;
 
 import static OOP.ec22529.MP.contributions.A3.getCandidateArray;
 
@@ -21,7 +22,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
     private JFrame frameElection;
     private JTextField textField;
     private boolean isWindowCreated = false;
-    private JButton addButton, randomButton, runButton, displayButton, exitButton, submitButton, clearButton;
+    private JButton addButton, randomButton, runButton, displayButton, uploadButton, submitButton, clearButton, saveButton;
     private boolean validated = false;
     private ArrayList<Candidate> list;
 
@@ -46,13 +47,13 @@ public class MP_ec22529 extends JFrame implements ActionListener {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         
-        JLabel optionA = new JLabel("Add a candidate:");
-        panel.add(optionA);
+       // JLabel optionA = new JLabel("Add 1 candidate:");
+        //panel.add(optionA);
         textField = new JTextField(20);
         panel.add(textField);
 
         //SUBMIT BUTTON
-        submitButton = new JButton("Submit specific candidate");
+        submitButton = new JButton("Submit candidate");
         submitButton.addActionListener(this);
         panel.add(submitButton);
 
@@ -76,10 +77,15 @@ public class MP_ec22529 extends JFrame implements ActionListener {
         clearButton.addActionListener(this);
         panel.add(clearButton);
 
+        //save Button
+        saveButton = new JButton("Save Winners");
+        saveButton.addActionListener(this);
+        panel.add(saveButton);
+
         //EXIT BUTTON
-        exitButton = new JButton("Exit");
-        exitButton.addActionListener(this);
-        panel.add(exitButton);
+        uploadButton = new JButton("Upload Candidates");
+        uploadButton.addActionListener(this);
+        panel.add(uploadButton);
 
         displayField = new JTextArea("LIST OF CANDIDATES: \n\n");
         displayField.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -184,8 +190,38 @@ public class MP_ec22529 extends JFrame implements ActionListener {
                 userID = randCandidate.un;
                 displayField.append("(" + userID + ")" + " " + randCandidate.getName() + "\n");
             }
-        } else if (e.getSource() == exitButton) {
-            System.exit(0);
+        } else if (e.getSource() == uploadButton) {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Text Files", "txt")); // add file filter
+            int result = fileChooser.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        // process each line here
+                        System.out.println(line);
+                        displayField.append(line+"\n");
+                        if (line.contains("(") && line.contains(")")) {
+                            // extract the string within the brackets
+                            String extractedString = line.substring(line.indexOf("(") + 1, line.indexOf(")"));
+                            // execute code on the extracted string here
+                            for(int i =0; i<getCandidateArray().length; i++) {
+                                if (extractedString.equals(getCandidateArray()[i].un)) {
+                                    System.out.println(extractedString + " was successfully found");
+                                    list.add(getCandidateArray()[i]);
+                                }
+                                else{
+
+                                }
+                            }
+                        }
+
+                    }
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Error reading file: " + ex.getMessage());
+                }
+            }
         }
         else if (e.getSource() == clearButton){
             sloganField.setText("LIST OF CANDIDATE SLOGANS: \n\n");
@@ -224,7 +260,26 @@ public class MP_ec22529 extends JFrame implements ActionListener {
                 electionField.append(otherWinnersPresent + "\n\n");
             }
         }
-    }
+        else if(e.getSource() == saveButton){
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Text Files", "txt")); // add file filter
+            int result = fileChooser.showSaveDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                if (!file.getName().endsWith(".txt")) {
+                    file = new File(file.getAbsolutePath() + ".txt"); // add .txt extension
+                }
+                try (PrintWriter writer = new PrintWriter(file)) {
+                    //CHANGE THIS
+                    writer.print(electionField.getText());
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Error saving file: " + ex.getMessage());
+                }
+            }
+        }
+        }
+
+
 
     public static void main(String[] args) {
         new MP_ec22529();
