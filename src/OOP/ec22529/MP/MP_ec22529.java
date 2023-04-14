@@ -191,6 +191,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
                 displayField.append("(" + userID + ")" + " " + randCandidate.getName() + "\n");
             }
         } else if (e.getSource() == uploadButton) {
+            JOptionPane.showMessageDialog(null, "Please upload a text file which has\n\n= Each candidate's username on a separate line \n= The username should be within brackets\n\n So for example, my candidate username would be (ec22529)");
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileFilter(new FileNameExtensionFilter("Text Files", "txt")); // add file filter
             int result = fileChooser.showOpenDialog(this);
@@ -261,6 +262,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
             }
         }
         else if(e.getSource() == saveButton){
+            JOptionPane.showMessageDialog(null, "Please choose a destination to save a text file\ncontaining all the winners from the elections ran");
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileFilter(new FileNameExtensionFilter("Text Files", "txt")); // add file filter
             int result = fileChooser.showSaveDialog(this);
