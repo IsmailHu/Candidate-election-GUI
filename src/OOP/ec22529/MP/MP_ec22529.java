@@ -14,6 +14,7 @@ import java.io.*;
 
 import static OOP.ec22529.MP.contributions.A3.getCandidateArray;
 
+
 public class MP_ec22529 extends JFrame implements ActionListener {
 
     private JPanel panelMain;
@@ -36,6 +37,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
     private int num = 1;
     private static int numOfErrors = 0;
     private static int numOfElections;
+    private static JProgressBar progressBar;
 
     public MP_ec22529() {
         this.list = new ArrayList<Candidate>();
@@ -44,16 +46,18 @@ public class MP_ec22529 extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 5));
         panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        
-       // JLabel optionA = new JLabel("Add 1 candidate:");
-        //panel.add(optionA);
+
         textField = new JTextField(20);
         panel.add(textField);
 
+        //colour
+        Color customColor = new Color(128, 64, 200);
+        panel.setBackground(customColor);
+
         //SUBMIT BUTTON
-        submitButton = new JButton("Submit candidate");
+        submitButton = new JButton("Submit Candidate");
         submitButton.addActionListener(this);
         panel.add(submitButton);
 
@@ -86,6 +90,14 @@ public class MP_ec22529 extends JFrame implements ActionListener {
         uploadButton = new JButton("Upload Candidates");
         uploadButton.addActionListener(this);
         panel.add(uploadButton);
+
+        progressBar = new JProgressBar();
+        progressBar.setMinimum(0);
+        progressBar.setLayout(new FlowLayout(FlowLayout.RIGHT, 1 ,1));
+        progressBar.setMaximum(100);
+        progressBar.setStringPainted(true); // Shows progress percentage
+        progressBar.setPreferredSize(new Dimension(50, 30));
+        panel.add(progressBar);
 
         displayField = new JTextArea("LIST OF CANDIDATES: \n\n");
         displayField.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -211,6 +223,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
                                 if (extractedString.equals(getCandidateArray()[i].un)) {
                                     System.out.println(extractedString + " was successfully found");
                                     list.add(getCandidateArray()[i]);
+                                    //add progress bar here
                                 }
                                 else{
 
@@ -237,7 +250,8 @@ public class MP_ec22529 extends JFrame implements ActionListener {
             }
             else{
                 //START OF ELECTION
-
+                //START LOADING BAR HERE
+                progressBar.setValue(0);
                 String printWinner = "";
                 Candidate[] winners = tallyCandidates(list.toArray(new Candidate[0]));
                 Candidate winner = findActualWinner(winners);
@@ -332,6 +346,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
 
         for(int i = 0; i < number; i++) {
             winners[i] = findWinner(array, counter);
+
         }
 
         return winners;
@@ -343,9 +358,11 @@ public class MP_ec22529 extends JFrame implements ActionListener {
         // Populate array with votes
         for(int i = 0; i < getCandidateArray().length; i++) {
             try {
+                progressBar.setValue(i);
                 votes[i] = getCandidateArray()[i].vote(array);
                 String printable = "("+getCandidateArray()[i].un+")" +":" + " chose " + getCandidateArray()[i].getName() + "\twith slogan: " + getCandidateArray()[i].getSlogan();
                sloganField.append(printable +"\n");
+
 
             } catch(Exception e) {
                 numOfErrors++;

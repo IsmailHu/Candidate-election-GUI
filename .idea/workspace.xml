@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc81f5a0-d375-4d22-b3cc-6b1fbbb5937b" name="Changes" comment="new ui for mp&#10;=Added file input and output&#10;+ need to improve graphics and colours&#10;+ add start screen&#10;+NEED TO ADD POP UP EXPLAINING HOW TO ADD CANDIDATES">
+    <list default="true" id="fc81f5a0-d375-4d22-b3cc-6b1fbbb5937b" name="Changes" comment="new ui for mp&#10;=Added file input and output&#10;+ need to improve graphics and colours&#10;+ add start screen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/OOP/ec22529/MP/MP_ec22529.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/OOP/ec22529/MP/MP_ec22529.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +58,8 @@
       <workItem from="1681332060376" duration="11073000" />
       <workItem from="1681419542312" duration="3813000" />
       <workItem from="1681429131547" duration="613000" />
-      <workItem from="1681431060981" duration="1655000" />
+      <workItem from="1681431060981" duration="1688000" />
+      <workItem from="1681479071361" duration="1455000" />
     </task>
     <task id="LOCAL-00001" summary="new ui for mp">
       <created>1681326612635</created>
@@ -108,7 +110,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681432442583</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="new ui for mp&#10;=Added file input and output&#10;+ need to improve graphics and colours&#10;+ add start screen">
+      <created>1681432755741</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1681432755741</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -118,8 +127,8 @@
     <MESSAGE value="new ui for mp" />
     <MESSAGE value="new ui for mp&#10;+ need to add random 50 button&#10;+ add clear button&#10;+ add start screen&#10;+ make slogan cleaner" />
     <MESSAGE value="new ui for mp&#10;+need to make csv file stuff&#10;+ need to improve graphics and colours&#10;+ add start screen" />
-    <MESSAGE value="new ui for mp&#10;=Added file input and output&#10;+ need to improve graphics and colours&#10;+ add start screen" />
     <MESSAGE value="new ui for mp&#10;=Added file input and output&#10;+ need to improve graphics and colours&#10;+ add start screen&#10;+NEED TO ADD POP UP EXPLAINING HOW TO ADD CANDIDATES" />
-    <option name="LAST_COMMIT_MESSAGE" value="new ui for mp&#10;=Added file input and output&#10;+ need to improve graphics and colours&#10;+ add start screen&#10;+NEED TO ADD POP UP EXPLAINING HOW TO ADD CANDIDATES" />
+    <MESSAGE value="new ui for mp&#10;=Added file input and output&#10;+ need to improve graphics and colours&#10;+ add start screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="new ui for mp&#10;=Added file input and output&#10;+ need to improve graphics and colours&#10;+ add start screen" />
   </component>
 </project>
