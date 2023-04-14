@@ -49,47 +49,59 @@ public class MP_ec22529 extends JFrame implements ActionListener {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 5));
         panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
+       //more colour
+        Color brown = new Color(168, 141, 126);
+        Color red = new Color(229, 184, 184);
+
         textField = new JTextField(20);
+        textField.setBackground(red);
         panel.add(textField);
 
         //colour
-        Color customColor = new Color(128, 64, 200);
+        Color customColor = new Color(88, 122, 110);
         panel.setBackground(customColor);
 
         //SUBMIT BUTTON
         submitButton = new JButton("Submit Candidate");
         submitButton.addActionListener(this);
+        submitButton.setBackground(brown);
         panel.add(submitButton);
 
         //RANDOM BUTTON
         randomButton = new JButton("Add 1 random candidate");
         randomButton.addActionListener(this);
+        randomButton.setBackground(brown);
         panel.add(randomButton);
 
         //DISPLAY BUTTON
         displayButton = new JButton("Add 50 random");
         displayButton.addActionListener(this);
+        displayButton.setBackground(brown);
         panel.add(displayButton);
-
-        //RUN ELECTION BUTTON
-        runButton = new JButton("Run Election");
-        runButton.addActionListener(this);
-        panel.add(runButton);
 
         //clear Button
         clearButton = new JButton("Clear all");
         clearButton.addActionListener(this);
+        clearButton.setBackground(brown);
         panel.add(clearButton);
 
         //save Button
         saveButton = new JButton("Save Winners");
         saveButton.addActionListener(this);
+        saveButton.setBackground(brown);
         panel.add(saveButton);
 
-        //EXIT BUTTON
+        //upload BUTTON
         uploadButton = new JButton("Upload Candidates");
         uploadButton.addActionListener(this);
+        uploadButton.setBackground(brown);
         panel.add(uploadButton);
+
+        //RUN ELECTION BUTTON
+        runButton = new JButton("Run Election");
+        runButton.addActionListener(this);
+        runButton.setBackground(red);
+        panel.add(runButton);
 
         progressBar = new JProgressBar();
         progressBar.setMinimum(0);
@@ -105,13 +117,15 @@ public class MP_ec22529 extends JFrame implements ActionListener {
         displayField.setEditable(false);
         displayField.setLineWrap(true); // enable line wrapping
         displayField.setWrapStyleWord(true); // wrap lines on word boundaries
+        Color lightTurquoise = new Color(222, 232, 228);
+        displayField.setBackground(lightTurquoise);
         panel.add(displayField);
+
 
         scrollPane = new JScrollPane(displayField);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setPreferredSize(new Dimension(200, 700));
         panel.add(scrollPane);
-
 
         electionField = new JTextArea("LIST OF ELECTION WINNERS: \n\n");
         electionField.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -119,6 +133,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
         electionField.setEditable(false);
         electionField.setLineWrap(true);
         electionField.setWrapStyleWord(true);
+        electionField.setBackground(lightTurquoise);
         panel.add(electionField);
 
         scrollPane = new JScrollPane(electionField);
@@ -132,6 +147,7 @@ public class MP_ec22529 extends JFrame implements ActionListener {
         sloganField.setEditable(false);
         sloganField.setLineWrap(true);
         sloganField.setWrapStyleWord(true);
+        sloganField.setBackground(lightTurquoise);
         panel.add(sloganField);
 
         scrollPane = new JScrollPane(sloganField);
